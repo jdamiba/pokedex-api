@@ -1,4 +1,8 @@
-# Pokemon API
+# Pokemon API and Frontend Client
+
+This project consists of a Pokemon API and a React frontend client that consumes the API.
+
+## Backend: Pokemon API
 
 A simple API for retrieving Pokemon information.
 
@@ -159,6 +163,105 @@ Authorization: Bearer <your_token_here>
 ## Data Source
 
 This API uses [PokeAPI](https://pokeapi.co/) as its data source.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Frontend: Pokemon Client
+
+The frontend is a React application that interacts with the Pokemon API to display and manage Pokemon data.
+
+### Installation
+
+1. Navigate to the frontend directory:
+
+   ```
+   cd pokemon-frontend
+   ```
+
+2. Install dependencies:
+
+   ```
+   npm install
+   ```
+
+3. Start the development server:
+   ```
+   npm start
+   ```
+
+The frontend will be available at `http://localhost:3000`.
+
+### Features
+
+- Display a paginated list of Pokemon
+- Search for Pokemon by name or type
+- View detailed information about each Pokemon
+- Add, edit, and delete Pokemon (for authenticated users)
+- User authentication (register/login)
+
+### API Integration
+
+The frontend uses Axios to make HTTP requests to the Pokemon API. Here are some examples of how the API is consumed:
+
+1. Fetching Pokemon list:
+
+   ```javascript
+   const response = await axios.get("/api/pokemon", {
+     params: { page, limit },
+   });
+   ```
+
+2. Searching for Pokemon:
+
+   ```javascript
+   const response = await axios.get(`/api/pokemon/name/${searchTerm}`);
+   ```
+
+3. Adding a new Pokemon:
+
+   ```javascript
+   const response = await axios.post("/api/pokemon", newPokemonData, {
+     headers: { Authorization: `Bearer ${token}` },
+   });
+   ```
+
+4. User authentication:
+   ```javascript
+   const response = await axios.post("/auth/login", { username, password });
+   const token = response.data.token;
+   // Store token for subsequent authenticated requests
+   ```
+
+### State Management
+
+The frontend uses React Context and hooks for state management, allowing for efficient updates of the UI based on API responses and user interactions.
+
+### Styling
+
+The application is styled using CSS modules, ensuring that styles are scoped to individual components and preventing global style conflicts.
+
+## Running the Full Stack Application
+
+1. Start the backend server (from the root directory):
+
+   ```
+   npm start
+   ```
+
+2. In a new terminal, start the frontend development server:
+
+   ```
+   cd pokemon-frontend
+   npm start
+   ```
+
+3. Access the application at `http://localhost:3000` in your web browser.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
