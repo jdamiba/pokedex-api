@@ -2,7 +2,7 @@
 
 This project consists of a Node.js API server that serves information about Pokemon. It is deployed to https://pokedex-api-p7m0.onrender.com/.
 
-A Next.js front-end application that consumes this API is deployed to https://pokedex-frontend-lake.vercel.app/. The source code for that application can be found at https://github.com/jdamiba/pokedex-frontend.
+A React.js front-end application that consumes this API is deployed to https://pokedex-frontend-lake.vercel.app/. The source code for that application can be found at https://github.com/jdamiba/pokedex-frontend.
 
 ## Backend: Pokemon API
 
@@ -150,7 +150,7 @@ The API will be available at `http://localhost:3000/api/`.
 
 ## Error Handling
 
-The API returns appropriate HTTP status codes and error messages for invalid requests or server errors.
+The API returns appropriate HTTP status codes and error messages for invalid requests or server errors. The frontend displays these error messages to the user when appropriate.
 
 ## Authentication
 
