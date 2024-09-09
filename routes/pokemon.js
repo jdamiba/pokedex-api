@@ -110,4 +110,23 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
+// New route: Get a Pokémon by name (authenticated users only)
+router.get("/name/:name", auth, async (req, res) => {
+  try {
+    const pokemonName = req.params.name.toLowerCase();
+    const pokemon = await Pokemon.findOne({
+      "name.english": { $regex: new RegExp(`^${pokemonName}$`, "i") },
+    });
+
+    if (!pokemon) {
+      return res.status(404).json({ message: "Pokémon not found" });
+    }
+    res.json(pokemon);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching Pokémon", error: error.message });
+  }
+});
+
 module.exports = router;
