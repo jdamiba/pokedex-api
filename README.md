@@ -1,10 +1,12 @@
 # Pokemon API and Frontend Client
 
-This project consists of a Pokemon API and a React frontend client that consumes the API.
+This project consists of a Node.js API server that serves information about Pokemon. It is deployed to https://pokedex-api-p7m0.onrender.com/.
+
+A Next.js front-end application that consumes this API is deployed to https://pokedex-frontend-lake.vercel.app/. The source code for that application can be found at https://github.com/jdamiba/pokedex-frontend.
 
 ## Backend: Pokemon API
 
-A simple API for retrieving Pokemon information.
+An API for retrieving Pokemon information.
 
 ## Installation
 
@@ -74,77 +76,75 @@ The API will be available at `http://localhost:3000/api/`.
 - **Response:**
   ```json
   {
-    "data": {
-      "pokemon": number,
-      "currentPage": number,
-      "totalPages": number,
-      "totalPokemon": number,
-    }
+    "pokemon": [array of Pokemon objects],
+    "currentPage": number,
+    "totalPages": number,
+    "totalPokemon": number
   }
   ```
 
 ### Get Pokemon by ID
 
-- **URL:** `api/pokemon/:id`
+- **URL:** `/api/pokemon/:id`
 - **Method:** GET
 - **Description:** Retrieves a specific Pokemon by its ID.
 - **Parameters:** `id` (number) - The Pokemon's ID.
+- **Authentication:** Required
 - **Response:** Pokemon object.
 
 ### Get Pokemon by Name
 
-- **URL:** `api/pokemon/name/:name`
+- **URL:** `/api/pokemon/name/:name`
 - **Method:** GET
 - **Description:** Retrieves a specific Pokemon by its name.
 - **Parameters:** `name` (string) - The Pokemon's name.
+- **Authentication:** Required
 - **Response:** Pokemon object.
 
-### Get Pokemon by Type
+### Add New Pokemon
 
-- **URL:** `api/pokemon/type/:type`
-- **Method:** GET
-- **Description:** Retrieves all Pokemon of a specific type.
-- **Parameters:** `type` (string) - The Pokemon type.
-- **Response:** Array of Pokemon objects.
-
-#### Add New Pokemon
-
-- **URL:** `/pokemon`
+- **URL:** `/api/pokemon`
 - **Method:** POST
 - **Description:** Adds a new Pokemon to the database.
-- **Authentication:** Required
+- **Authentication:** Required (Admin only)
 - **Body:**
   ```json
   {
-    "name": "string",
-    "type": "string",
-    "abilities": ["string"],
-    "stats": {
-      "hp": "number",
-      "attack": "number",
-      "defense": "number",
-      "speed": "number"
+    "name": {
+      "english": "string",
+      "japanese": "string",
+      "chinese": "string",
+      "french": "string"
+    },
+    "type": ["string"],
+    "base": {
+      "HP": number,
+      "Attack": number,
+      "Defense": number,
+      "Sp. Attack": number,
+      "Sp. Defense": number,
+      "Speed": number
     }
   }
   ```
 - **Response:** Newly created Pokemon object.
 
-#### Update Pokemon
+### Update Pokemon
 
-- **URL:** `/pokemon/:id`
+- **URL:** `/api/pokemon/:id`
 - **Method:** PUT
 - **Description:** Updates an existing Pokemon's information.
-- **Authentication:** Required
+- **Authentication:** Required (Admin only)
 - **Parameters:** `id` (number) - The Pokemon's ID.
 - **Body:** Same as Add New Pokemon, with optional fields.
 - **Response:** Updated Pokemon object.
 
-#### Delete Pokemon
+### Delete Pokemon
 
-- **URL:** `/pokemon/:id`
+- **URL:** `/api/pokemon/:id`
 - **Method:** DELETE
 - **Description:** Deletes a Pokemon from the database.
-- **Authentication:** Required
+- **Authentication:** Required (Admin only)
 - **Parameters:** `id` (number) - The Pokemon's ID.
 - **Response:** Success message.
 
@@ -162,107 +162,12 @@ Authorization: Bearer <your_token_here>
 
 ## Data Source
 
-This API uses [PokeAPI](https://pokeapi.co/) as its data source.
+This API uses a JSON file obtained from https://github.com/fanzeyi/pokemon.json as its data source.
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Frontend: Pokemon Client
-
-The frontend is a React application that interacts with the Pokemon API to display and manage Pokemon data.
-
-### Installation
-
-1. Navigate to the frontend directory:
-
-   ```
-   cd pokemon-frontend
-   ```
-
-2. Install dependencies:
-
-   ```
-   npm install
-   ```
-
-3. Start the development server:
-   ```
-   npm start
-   ```
-
-The frontend will be available at `http://localhost:3000`.
-
-### Features
-
-- Display a paginated list of Pokemon
-- Search for Pokemon by name or type
-- View detailed information about each Pokemon
-- Add, edit, and delete Pokemon (for authenticated users)
-- User authentication (register/login)
-
-### API Integration
-
-The frontend uses Axios to make HTTP requests to the Pokemon API. Here are some examples of how the API is consumed:
-
-1. Fetching Pokemon list:
-
-   ```javascript
-   const response = await axios.get("/api/pokemon", {
-     params: { page, limit },
-   });
-   ```
-
-2. Searching for Pokemon:
-
-   ```javascript
-   const response = await axios.get(`/api/pokemon/name/${searchTerm}`);
-   ```
-
-3. Adding a new Pokemon:
-
-   ```javascript
-   const response = await axios.post("/api/pokemon", newPokemonData, {
-     headers: { Authorization: `Bearer ${token}` },
-   });
-   ```
-
-4. User authentication:
-   ```javascript
-   const response = await axios.post("/auth/login", { username, password });
-   const token = response.data.token;
-   // Store token for subsequent authenticated requests
-   ```
-
-### State Management
-
-The frontend uses React Context and hooks for state management, allowing for efficient updates of the UI based on API responses and user interactions.
-
-### Styling
-
-The application is styled using CSS modules, ensuring that styles are scoped to individual components and preventing global style conflicts.
-
-## Running the Full Stack Application
-
-1. Start the backend server (from the root directory):
-
-   ```
-   npm start
-   ```
-
-2. In a new terminal, start the frontend development server:
-
-   ```
-   cd pokemon-frontend
-   npm start
-   ```
-
-3. Access the application at `http://localhost:3000` in your web browser.
+This project is licensed under the MIT License. All information about Pokemon is copyrighted by the Pokémon Company and its affiliates.
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License.
